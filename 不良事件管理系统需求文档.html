@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不良事件管理系统 - 需求文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* 头部样式 */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* 内容区域 */
+        .content {
+            padding: 50px 40px;
+        }
+
+        /* 目录样式 */
+        .toc {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 30px;
+            margin-bottom: 50px;
+            border-radius: 8px;
+        }
+
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e6ff;
+        }
+
+        .toc li:last-child {
+            border-bottom: none;
+        }
+
+        .toc a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block;
+        }
+
+        .toc a:hover {
+            color: #667eea;
+            padding-left: 10px;
+        }
+
+        /* 章节样式 */
+        .section {
+            margin-bottom: 60px;
+            scroll-margin-top: 20px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h2 .emoji {
+            margin-right: 15px;
+            font-size: 36px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 24px;
+            margin: 30px 0 20px;
+            padding-left: 15px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .section h4 {
+            color: #555;
+            font-size: 18px;
+            margin: 25px 0 15px;
+            font-weight: 600;
+        }
+
+        /* 文字内容 */
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+            color: #555;
+        }
+
+        .section ul, .section ol {
+            margin: 15px 0 15px 30px;
+            color: #555;
+        }
+
+        .section li {
+            margin-bottom: 10px;
+        }
+
+        /* 截图样式 */
+        .screenshot {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .screenshot img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .screenshot .caption {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* 信息卡片 */
+        .info-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .info-box.warning {
+            background: #fff8e6;
+            border-left-color: #ffa500;
+        }
+
+        .info-box.success {
+            background: #e6fff2;
+            border-left-color: #00c853;
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        /* 功能卡片 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* 流程图样式 - 可视化流程 */
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin: 40px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ebff 100%);
+            border-radius: 16px;
+            overflow-x: auto;
+        }
+
+        .flow-column {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .flow-header {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 30px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            text-align: center;
+            width: 100%;
+        }
+
+        .flow-step {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            border: 2px solid #e0e6ff;
+            transition: all 0.3s;
+            width: 100%;
+            line-height: 1.6;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .flow-step.step-start {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-color: #0ea5e9;
+            color: #0c4a6e;
+            font-weight: 600;
+        }
+
+        .flow-step.step-process {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #f59e0b;
+            color: #78350f;
+            font-weight: 600;
+        }
+
+        .flow-step.step-decision {
+            background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+            border-color: #a855f7;
+            color: #581c87;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .flow-step.step-decision::before {
+            content: "⚡";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+
+        .flow-step.step-end {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #ef4444;
+            color: #7f1d1d;
+            font-weight: 600;
+        }
+
+        .flow-arrow {
+            font-size: 28px;
+            color: #667eea;
+            margin: 15px 0;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+        }
+
+        .flow-arrow-left {
+            font-size: 28px;
+            color: #f59e0b;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .flow-arrow-right {
+            font-size: 28px;
+            color: #10b981;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .flow-branches {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            width: 100%;
+            justify-content: space-around;
+        }
+
+        .branch {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .branch-label {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .branch-label.reject {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+        }
+
+        .branch-label.refuse {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            color: white;
+        }
+
+        .branch-label.success {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            color: white;
+        }
+
+        /* 流程图响应式 */
+        @media (max-width: 968px) {
+            .process-flow {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .flow-column {
+                width: 100%;
+            }
+        }
+
+        /* 简单流程图样式 */
+        .simple-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ebff 100%);
+            border-radius: 12px;
+            margin: 25px auto;
+            max-width: 380px;
+        }
+
+        .simple-flow-step {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            border: 2px solid #e0e6ff;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .simple-flow-step:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.25);
+            border-color: #667eea;
+        }
+
+        .simple-flow-step.flow-start {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #10b981;
+        }
+
+        .simple-flow-step.flow-end {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-color: #3b82f6;
+        }
+
+        .step-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .step-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .step-detail {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .simple-flow-arrow {
+            font-size: 24px;
+            color: #667eea;
+            margin: 12px 0;
+            font-weight: bold;
+            text-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 保留旧的flowchart样式作为备用 */
+        .flowchart {
+            background: #f8f9ff;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            overflow-x: auto;
+        }
+
+        .flowchart pre {
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody tr:hover {
+            background: #f8f9ff;
+        }
+
+        /* 标签样式 */
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+        }
+
+        .tag.required {
+            background: #f44336;
+        }
+
+        .tag.optional {
+            background: #4caf50;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 5px 0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .section h2 {
+                font-size: 24px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .screenshot img {
+                page-break-inside: avoid;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>📋 不良事件管理系统</h1>
+            <p class="subtitle">完整需求分析文档 v1.0</p>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="content">
+            
+            <!-- 目录 -->
+            <div class="toc">
+                <h2>📑 文档目录</h2>
+                <ul>
+                    <li><a href="#overview">一、系统概述</a></li>
+                    <li><a href="#modules">二、核心功能模块</a></li>
+                    <li><a href="#process">三、系统流程图</a></li>
+                    <li><a href="#technical">四、技术要点提示</a></li>
+                    <li><a href="#data">五、关键数据字段</a></li>
+                </ul>
+            </div>
+
+            <!-- 第一部分：系统概述 -->
+            <section id="overview" class="section">
+                <h2><span class="emoji">🎯</span>一、系统概述</h2>
+                
+                <p>这是一套医院用的<strong>不良事件上报和管理系统</strong>（就像一个"医疗问题报告平台"），主要用于：</p>
+                
+                <ul>
+                    <li>医护人员发现问题时在线上报</li>
+                    <li>各级部门逐级审核</li>
+                    <li>统计分析找出改进方向</li>
+                    <li>质量控制和监测</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>💡 通俗理解</h4>
+                    <p>就像一个"医院问题反馈系统"：医生护士发现问题 → 在线填表 → 部门审核 → 统计分析 → 改进管理</p>
+                </div>
+            </section>
+
+            <!-- 第二部分：核心功能模块 -->
+            <section id="modules" class="section">
+                <h2><span class="emoji">⚙️</span>二、核心功能模块</h2>
+
+                <!-- 模块1：事件上报 -->
+                <h3>🎯 模块1：事件上报功能</h3>
+                
+                <h4>1.1 事件上报表单</h4>
+                <p><strong>功能描述：</strong>医护人员填写表单上报不良事件</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-12.png" alt="事件上报表单">
+                    <p class="caption">图1：事件上报表单页面</p>
+                </div>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-13.png" alt="选择事件分类">
+                    <p class="caption">图2：选择事件分类（支持多分类体系）</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>📝 表单字段包括</h4>
+                    
+                    <p><strong>① 事件基本信息</strong></p>
+                    <ul>
+                        <li>事件上报时间* <span class="tag required">必填</span>（日期时间选择器）</li>
+                        <li>事件发生时间* <span class="tag required">必填</span>（日期时间选择器）</li>
+                        <li>不良事件分类* <span class="tag required">必填</span>（多选标签，如：医疗管理类、手术类）</li>
+                        <li>患者类别* <span class="tag required">必填</span>（单选：急诊/门诊/住院/其他）</li>
+                    </ul>
+
+                    <p><strong>② 患者基本信息</strong></p>
+                    <ul>
+                        <li>患者ID号* <span class="tag required">必填</span>（文本输入）</li>
+                        <li>住院号 <span class="tag optional">选填</span>（带门诊患者不填提示）</li>
+                        <li>患者姓名* <span class="tag required">必填</span>（文本输入）</li>
+                        <li>性别* <span class="tag required">必填</span>（单选：男/女）</li>
+                        <li>年龄* <span class="tag required">必填</span>（数字输入）</li>
+                        <li>所在科室* <span class="tag required">必填</span>（下拉选择）</li>
+                        <li>入院/就诊时间* <span class="tag required">必填</span>（日期时间）</li>
+                        <li>出院时间 <span class="tag optional">选填</span>（日期时间）</li>
+                        <li>诊断* <span class="tag required">必填</span>（文本域）</li>
+                    </ul>
+
+                    <p><strong>③ 事件详情</strong></p>
+                    <ul>
+                        <li>不良事件发生过程描述* <span class="tag required">必填</span>（富文本编辑器）</li>
+                        <li>事件处理过程 <span class="tag optional">选填</span></li>
+                        <li>事件处理结果集 <span class="tag optional">选填</span></li>
+                    </ul>
+                </div>
+
+                <div class="info-box success">
+                    <h4>✨ 交互特点</h4>
+                    <ul>
+                        <li>草稿状态保存功能</li>
+                        <li>支持返回编辑</li>
+                        <li>打印功能</li>
+                    </ul>
+                </div>
+
+                <!-- 模块2：审核列表 -->
+                <h3>📊 模块2：审核列表（审核台）</h3>
+                
+                <h4>2.1 审核列表页面</h4>
+                <p><strong>功能描述：</strong>展示待审核的事件列表</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-10.png" alt="审核列表">
+                    <p class="caption">图3：待审核事件列表（支持筛选和批量审核）</p>
+                </div>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-11.png" alt="审核列表详细">
+                    <p class="caption">图4：审核列表（显示待审核数量12条）</p>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>列表字段</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>操作列</td>
+                            <td>审核按钮</td>
+                        </tr>
+                        <tr>
+                            <td>事件一级类别</td>
+                            <td>如：医疗管理类、护理管理类</td>
+                        </tr>
+                        <tr>
+                            <td>事件二级类别</td>
+                            <td>如：手术类、跌倒类</td>
+                        </tr>
+                        <tr>
+                            <td>患者类别</td>
+                            <td>住院/门诊/急诊</td>
+                        </tr>
+                        <tr>
+                            <td>患者ID号</td>
+                            <td>唯一标识</td>
+                        </tr>
+                        <tr>
+                            <td>住院号</td>
+                            <td>住院患者专用</td>
+                        </tr>
+                        <tr>
+                            <td>患者姓名</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>上报人</td>
+                            <td>上报人姓名</td>
+                        </tr>
+                        <tr>
+                            <td>上报科室</td>
+                            <td>发生科室</td>
+                        </tr>
+                        <tr>
+                            <td>上报时间</td>
+                            <td>精确到分钟</td>
+                        </tr>
+                        <tr>
+                            <td>当前状态</td>
+                            <td>待审核/已通过/待判定等</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>2.2 审核详情页面</h4>
+                <p><strong>功能描述：</strong>查看事件详情并进行审核操作</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-07.png" alt="审核详情页">
+                    <p class="caption">图5：事件详情页（包含完整的事件信息和患者信息）</p>
+                </div>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-09.png" alt="审核进度">
+                    <p class="caption">图6：审核进度时间轴（显示审核流转过程）</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>📄 页面内容</h4>
+                    <ul>
+                        <li><strong>审核进度：</strong>时间轴展示（事件上报 → 职能部门审核未开始）</li>
+                        <li><strong>事件详情：</strong>只读展示所有上报信息
+                            <ul>
+                                <li>事件基本信息</li>
+                                <li>患者基本信息</li>
+                                <li>事件详情描述</li>
+                            </ul>
+                        </li>
+                        <li><strong>操作按钮：</strong>返回列表、打印、待审核标签</li>
+                    </ul>
+                </div>
+
+                <!-- 模块3：质控监测 -->
+                <h3>🔍 模块3：质控监测</h3>
+                
+                <h4>3.1 质控监测主页</h4>
+                <p><strong>功能描述：</strong>对不良事件进行质量控制和监测</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-06.png" alt="质控监测主页">
+                    <p class="caption">图7：质控监测主页（含数据看板和筛选列表）</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>待判定事件</h4>
+                        <p>24条 ↑8.3%<br>较上周增长2例</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>奖励事件</h4>
+                        <p>985条 ↑5.2%<br>占比80.5%</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>不奖励事件</h4>
+                        <p>243条 ↓2.1%<br>占比19.5%</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>争议事件</h4>
+                        <p>12条 ↑14.3%<br>需专家委员会判定</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>🔎 查询条件</h4>
+                    <ul>
+                        <li>时间范围* <span class="tag required">必选</span>（日期范围）</li>
+                        <li>事件一级类别（下拉多选）</li>
+                        <li>质控状态（下拉多选）</li>
+                        <li>审核状态（下拉多选）</li>
+                        <li>上报科室（下拉）</li>
+                        <li>事件姓名（文本输入）</li>
+                        <li>患者ID号（文本输入）</li>
+                        <li>事件编号（文本输入）</li>
+                    </ul>
+                </div>
+
+                <!-- 模块4：统计查询 -->
+                <h3>📈 模块4：统计查询</h3>
+                
+                <h4>4.1 统计查询页面</h4>
+                <p><strong>功能描述：</strong>多维度统计分析不良事件数据</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-08.png" alt="统计查询页面">
+                    <p class="caption">图8：统计查询页面（含饼图和趋势图）</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>📊 数据展示区</h4>
+                    
+                    <p><strong>① 汇总数据卡片：</strong></p>
+                    <ul>
+                        <li>总上报数：1,248 ↑12.5%（较上周增长138例）</li>
+                        <li>已审核数：1,126 ↑9.8%（审核完成率90.2%）</li>
+                        <li>奖励事件数：985 ↓3.2%（占比80.5%）</li>
+                        <li>高风险事件数：42 ↓8.7%（占事件占比3.4%）</li>
+                    </ul>
+
+                    <p><strong>② 事件类别分布：</strong></p>
+                    <ul>
+                        <li>饼图展示</li>
+                        <li>医疗管理类40%</li>
+                        <li>护理管理类25%</li>
+                        <li>药品管理类15%</li>
+                    </ul>
+
+                    <p><strong>③ 近12个月上报趋势：</strong></p>
+                    <ul>
+                        <li>面积折线图</li>
+                        <li>支持切换类别（全部/医疗类/护理类）</li>
+                    </ul>
+                </div>
+
+                <!-- 模块5：RCA根因分析 -->
+                <h3>📝 模块5：RCA根因分析</h3>
+                
+                <h4>5.1 RCA分析管理</h4>
+                <p><strong>功能描述：</strong>针对重大事件进行根因分析</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-05.png" alt="RCA根因分析">
+                    <p class="caption">图9：RCA根因分析管理页面（支持模板下载和报告上传）</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>🔧 功能区域</h4>
+                    
+                    <p><strong>① RCA模板下载：</strong></p>
+                    <ul>
+                        <li>提示：下载RCA分析模板，按指引填写后上传</li>
+                        <li>按钮：下载RCA分析模板</li>
+                    </ul>
+
+                    <p><strong>② 上传RCA报告：</strong></p>
+                    <ul>
+                        <li>拖拽上传文件</li>
+                        <li>支持格式：.docx, .pdf, .xlsx，最大5MB</li>
+                    </ul>
+
+                    <p><strong>③ 查询条件：</strong></p>
+                    <ul>
+                        <li>时间范围*</li>
+                        <li>报告科室（下拉）</li>
+                        <li>报告人姓名（文本输入）</li>
+                    </ul>
+
+                    <p><strong>④ RCA报告列表：</strong></p>
+                    <ul>
+                        <li>报告名称</li>
+                        <li>报告科室</li>
+                        <li>报告人</li>
+                        <li>提交日期</li>
+                        <li>操作（查看/下载/更多）</li>
+                    </ul>
+                </div>
+
+                <!-- 模块6：系统设置 -->
+                <h3>⚙️ 模块6：系统设置</h3>
+                
+                <h4>6.1 事件类别管理</h4>
+                <p><strong>功能描述：</strong>管理不良事件的分类体系</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-03.png" alt="事件类别管理">
+                    <p class="caption">图10：事件类别管理（树形结构展示）</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>🗂️ 类别结构（树形结构）</h4>
+                    
+                    <p><strong>医疗管理类</strong>（启用）</p>
+                    <ul>
+                        <li>医疗文件</li>
+                        <li>手术类</li>
+                        <li>麻醉镇痛类</li>
+                        <li>介入诊疗(导管)类</li>
+                        <li>口腔治疗类</li>
+                        <li>康复治疗类</li>
+                        <li>孕产保健类</li>
+                    </ul>
+
+                    <p><strong>护理管理类</strong>（启用）</p>
+                    <ul>
+                        <li>跌倒类</li>
+                        <li>坠床类</li>
+                        <li>压疮类</li>
+                    </ul>
+                </div>
+
+                <h4>6.2 表单模板设置</h4>
+                <p><strong>功能描述：</strong>自定义事件上报表单的字段和布局</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-02.png" alt="表单模板设置">
+                    <p class="caption">图11：表单模板设置（支持拖拽设计）</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>🎨 表单设计区域</h4>
+                    
+                    <p><strong>字段类型库（左侧工具栏）：</strong></p>
+                    <ul>
+                        <li>基础字段：单行文本、多行文本、数字、单选框组、复选框组、下拉选择</li>
+                        <li>高级字段：日期选择、时间选择、图片上传、附件上传</li>
+                    </ul>
+
+                    <p><strong>表单预览区（中间）：</strong></p>
+                    <ul>
+                        <li>显示表单标题："不良事件上报单"</li>
+                        <li>分段展示：一、事件基本信息；二、事件详细描述</li>
+                    </ul>
+
+                    <p><strong>字段属性配置（右侧）：</strong></p>
+                    <ul>
+                        <li>表单标题、字段名称、日期选择、时间选择等</li>
+                    </ul>
+                </div>
+
+                <h4>6.3 审核流程设置</h4>
+                <p><strong>功能描述：</strong>配置不同事件类别的审核流程</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-01.png" alt="审核流程设置">
+                    <p class="caption">图12：审核流程设置（可视化流程设计）</p>
+                </div>
+
+                <div class="simple-flow">
+                    <div class="simple-flow-step flow-start">
+                        <div class="step-icon">🚀</div>
+                        <div class="step-text">开始</div>
+                    </div>
+                    <div class="simple-flow-arrow">↓</div>
+                    <div class="simple-flow-step">
+                        <div class="step-icon">👨‍⚕️</div>
+                        <div class="step-text">科室初审</div>
+                        <div class="step-detail">张三/四科主任，需时例外主任</div>
+                    </div>
+                    <div class="simple-flow-arrow">↓</div>
+                    <div class="simple-flow-step">
+                        <div class="step-icon">👔</div>
+                        <div class="step-text">部门复审</div>
+                        <div class="step-detail">主任，医务部主任</div>
+                    </div>
+                    <div class="simple-flow-arrow">↓</div>
+                    <div class="simple-flow-step flow-end">
+                        <div class="step-icon">✅</div>
+                        <div class="step-text">结束</div>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <h4>⚠️ 提示</h4>
+                    <p>若要退出全屏，请从页面顶部向下滑动或按Esc</p>
+                    <p>从左向右按先后顺序，质监办与督管班都接收检验后送至质控部内检验后发报</p>
+                </div>
+
+                <!-- 模块7：权限管理 -->
+                <h3>🔐 模块7：权限管理</h3>
+                
+                <h4>7.1 权限组管理</h4>
+                <p><strong>功能描述：</strong>管理系统的角色权限</p>
+
+                <div class="screenshot">
+                    <img src="images/screenshot-04.png" alt="权限管理">
+                    <p class="caption">图13：权限组管理（含6个预设角色）</p>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>权限组名称</th>
+                            <th>描述</th>
+                            <th>用户数</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>管理员权限</td>
+                            <td>系统最高权限，可访问所有功能模块</td>
+                            <td>5</td>
+                            <td><span class="tag">启用</span></td>
+                        </tr>
+                        <tr>
+                            <td>上报人员</td>
+                            <td>仅拥有事件上报功能权限</td>
+                            <td>128</td>
+                            <td><span class="tag">启用</span></td>
+                        </tr>
+                        <tr>
+                            <td>科室审核</td>
+                            <td>科室负责人初审权限</td>
+                            <td>26</td>
+                            <td><span class="tag">启用</span></td>
+                        </tr>
+                        <tr>
+                            <td>职能部门审核</td>
+                            <td>职能部门负责人终审权限</td>
+                            <td>18</td>
+                            <td><span class="tag">启用</span></td>
+                        </tr>
+                        <tr>
+                            <td>质控管理</td>
+                            <td>质控部门监测与判定权限</td>
+                            <td>12</td>
+                            <td><span class="tag">启用</span></td>
+                        </tr>
+                        <tr>
+                            <td>统计分析</td>
+                            <td>仅拥有统计与查询权限报表权限</td>
+                            <td>8</td>
+                            <td><span class="tag optional">禁用</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 第三部分：系统流程图 -->
+            <section id="process" class="section">
+                <h2><span class="emoji">🔄</span>三、系统流程图</h2>
+
+                <h3>📌 整体上报审核流程</h3>
+
+                <div class="process-flow">
+                    <div class="flow-column">
+                        <div class="flow-header">上报人员</div>
+                        <div class="flow-step step-start">BS网页版</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">嵌入式系统</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">住院医生站<br>护士工作站<br>门诊医生站<br>辅诊护理程序<br>药事管理程序</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">上报、统计</div>
+                    </div>
+
+                    <div class="flow-column">
+                        <div class="flow-header">职能部门审核</div>
+                        <div class="flow-step step-process">接收上报</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step step-decision">审核判断</div>
+                        <div class="flow-branches">
+                            <div class="branch">
+                                <div class="branch-label reject">驳回</div>
+                                <div class="flow-arrow-left">←</div>
+                            </div>
+                            <div class="branch">
+                                <div class="branch-label refuse">拒绝</div>
+                                <div class="flow-arrow">↓</div>
+                                <div class="flow-step step-end">结束流程</div>
+                            </div>
+                            <div class="branch">
+                                <div class="branch-label success">通过</div>
+                                <div class="flow-arrow-right">→</div>
+                            </div>
+                        </div>
+                        <div class="flow-step">审核、分析、统计</div>
+                    </div>
+
+                    <div class="flow-column">
+                        <div class="flow-header">质控与统计</div>
+                        <div class="flow-step step-start">BS网页版</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">质控监测</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">统计分析</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">权限分配</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>📝 流程说明</h4>
+                    <ol>
+                        <li><strong>上报：</strong>医护人员通过BS网页版或嵌入的医生/护士工作站上报</li>
+                        <li><strong>职能部门审核：</strong>
+                            <ul>
+                                <li>通过 → 进入质控监测</li>
+                                <li>拒绝 → 结束流程</li>
+                                <li>驳回 → 返回上报人修改</li>
+                            </ul>
+                        </li>
+                        <li><strong>质控监测：</strong>统计分析、权限分配</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 第四部分：技术要点 -->
+            <section id="technical" class="section">
+                <h2><span class="emoji">💻</span>四、技术要点提示</h2>
+
+                <h3>🎨 界面特点</h3>
+                <ul>
+                    <li>左侧导航菜单（可折叠）</li>
+                    <li>顶部面包屑导航</li>
+                    <li>右上角用户信息（显示姓名、科室、角色）</li>
+                    <li>消息通知图标</li>
+                    <li>主题色：蓝色系（#409EFF）</li>
+                </ul>
+
+                <h3>📱 交互特点</h3>
+                <ul>
+                    <li>表格支持排序、筛选、分页</li>
+                    <li>表单支持草稿保存</li>
+                    <li>支持导出Excel</li>
+                    <li>支持打印</li>
+                    <li>时间范围选择器</li>
+                    <li>下拉多选</li>
+                    <li>树形结构展示</li>
+                </ul>
+
+                <h3>🔔 待办提醒</h3>
+                <ul>
+                    <li>审核列表显示待审核数量（红色数字角标）</li>
+                    <li>系统顶部消息提示</li>
+                </ul>
+            </section>
+
+            <!-- 第五部分：关键数据字段 -->
+            <section id="data" class="section">
+                <h2><span class="emoji">🔢</span>五、关键数据字段</h2>
+
+                <h3>📋 事件编号规则</h3>
+                <p><strong>格式：</strong><code>AE + 年月日 + 序号</code></p>
+                <p><strong>示例：</strong><code>AE20230929001</code></p>
+
+                <h3>🏥 患者编号</h3>
+                <ul>
+                    <li><strong>患者ID号：</strong><code>PAT + 年月日 + 序号</code>（如PAT20230929001）</li>
+                    <li><strong>住院号：</strong><code>ZY + 年月日 + 序号</code>（如ZY20230929001）</li>
+                </ul>
+
+                <div class="info-box success">
+                    <h4>✅ 总结</h4>
+                    <p>这就是这套<strong>不良事件管理系统</strong>的完整需求！系统涵盖了从事件上报、审核流转、质控监测、统计分析到系统配置的全流程管理。</p>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>📄 不良事件管理系统需求文档</p>
+            <p>Version 1.0 | 生成日期：2025年</p>
+        </div>
+    </div>
+</body>
+</html>

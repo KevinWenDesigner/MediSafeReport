@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统配置 - 医疗安全监测平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tree-item {
+            padding: 14px 20px;
+            margin: 6px 0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+            background: white;
+        }
+
+        .tree-item:hover {
+            background: #f8fafc;
+            border-color: var(--primary);
+        }
+
+        .tree-item.parent {
+            background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+            font-weight: 600;
+            border-color: var(--primary);
+        }
+
+        .tree-node {
+            margin-left: 32px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="logo-icon">🏥</span>
+            <span>医疗安全监测平台</span>
+        </div>
+        <div class="user-info">
+            <div class="notification">🔔<span class="badge">12</span></div>
+            <div class="user-avatar">
+                <div class="avatar">👨‍⚕️</div>
+                <div>
+                    <div style="font-size: 14px; font-weight: 600;">系统管理员</div>
+                    <div style="font-size: 12px; opacity: 0.85;">管理员</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <a href="index.html" class="menu-item"><span class="menu-icon">🏠</span><span>工作台</span></a>
+        <a href="report.html" class="menu-item"><span class="menu-icon">📝</span><span>事件上报</span></a>
+        <a href="audit-list.html" class="menu-item"><span class="menu-icon">✅</span><span>审核管理</span></a>
+        <a href="quality-control.html" class="menu-item"><span class="menu-icon">🔍</span><span>质控监测</span></a>
+        <a href="statistics.html" class="menu-item"><span class="menu-icon">📊</span><span>数据分析</span></a>
+        <a href="rca.html" class="menu-item"><span class="menu-icon">🔬</span><span>根因分析</span></a>
+        <a href="settings.html" class="menu-item active"><span class="menu-icon">⚙️</span><span>系统配置</span></a>
+        <a href="permissions.html" class="menu-item"><span class="menu-icon">🔐</span><span>权限中心</span></a>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <span>🏠 工作台 > </span>
+            <span>⚙️ 系统配置</span>
+        </div>
+
+        <div class="card">
+            <div class="card-title">🗂️ 事件类别管理</div>
+            
+            <div style="margin-bottom: 24px;">
+                <button class="btn btn-primary" onclick="alert('新增类别')">+ 新增一级类别</button>
+                <button class="btn btn-default">批量操作</button>
+            </div>
+
+            <div class="tree-item parent">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 20px;">📁</span>
+                    <span>医疗管理类</span>
+                    <span class="status-tag status-enabled">启用</span>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <span style="cursor: pointer;">✏️</span>
+                    <span style="cursor: pointer;">▼</span>
+                </div>
+            </div>
+            <div class="tree-node">
+                <div class="tree-item">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 18px;">📄</span>
+                        <span>医疗文件</span>
+                    </div>
+                    <span style="cursor: pointer;">✏️</span>
+                </div>
+                <div class="tree-item">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 18px;">📄</span>
+                        <span>手术类</span>
+                    </div>
+                    <span style="cursor: pointer;">✏️</span>
+                </div>
+                <div class="tree-item">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 18px;">📄</span>
+                        <span>麻醉镇痛类</span>
+                    </div>
+                    <span style="cursor: pointer;">✏️</span>
+                </div>
+            </div>
+
+            <div class="tree-item parent" style="margin-top: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 20px;">📁</span>
+                    <span>护理管理类</span>
+                    <span class="status-tag status-enabled">启用</span>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <span style="cursor: pointer;">✏️</span>
+                    <span style="cursor: pointer;">▼</span>
+                </div>
+            </div>
+            <div class="tree-node">
+                <div class="tree-item">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 18px;">📄</span>
+                        <span>跌倒类</span>
+                    </div>
+                    <span style="cursor: pointer;">✏️</span>
+                </div>
+                <div class="tree-item">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 18px;">📄</span>
+                        <span>坠床类</span>
+                    </div>
+                    <span style="cursor: pointer;">✏️</span>
+                </div>
+                <div class="tree-item">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 18px;">📄</span>
+                        <span>压疮类</span>
+                    </div>
+                    <span style="cursor: pointer;">✏️</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

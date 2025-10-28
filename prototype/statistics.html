@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据分析 - 医疗安全监测平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .chart-container {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            border: 2px dashed var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="logo-icon">🏥</span>
+            <span>医疗安全监测平台</span>
+        </div>
+        <div class="user-info">
+            <div class="notification">🔔<span class="badge">12</span></div>
+            <div class="user-avatar">
+                <div class="avatar">👨‍⚕️</div>
+                <div>
+                    <div style="font-size: 14px; font-weight: 600;">数据分析员</div>
+                    <div style="font-size: 12px; opacity: 0.85;">质控部 · 统计分析</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <a href="index.html" class="menu-item"><span class="menu-icon">🏠</span><span>工作台</span></a>
+        <a href="report.html" class="menu-item"><span class="menu-icon">📝</span><span>事件上报</span></a>
+        <a href="audit-list.html" class="menu-item"><span class="menu-icon">✅</span><span>审核管理</span></a>
+        <a href="quality-control.html" class="menu-item"><span class="menu-icon">🔍</span><span>质控监测</span></a>
+        <a href="statistics.html" class="menu-item active"><span class="menu-icon">📊</span><span>数据分析</span></a>
+        <a href="rca.html" class="menu-item"><span class="menu-icon">🔬</span><span>根因分析</span></a>
+        <a href="settings.html" class="menu-item"><span class="menu-icon">⚙️</span><span>系统配置</span></a>
+        <a href="permissions.html" class="menu-item"><span class="menu-icon">🔐</span><span>权限中心</span></a>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <span>🏠 工作台 > </span>
+            <span>📊 数据分析</span>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-row">
+                <div class="form-group" style="margin: 0;">
+                    <label>开始时间</label>
+                    <input type="date" value="2025-01-01">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>结束时间</label>
+                    <input type="date" value="2025-10-27">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>事件类别</label>
+                    <select><option>全部类别</option></select>
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>上报科室</label>
+                    <select><option>全部科室</option></select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary">🔍 查询</button>
+                <button class="btn btn-default">📥 导出</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card blue">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">📈 总上报数</div>
+                <div style="font-size: 36px; font-weight: 700; margin: 12px 0;">1,248</div>
+                <div style="font-size: 14px; color: var(--success);">↑ 12.5% 较上周增长138例</div>
+            </div>
+            <div class="stat-card green">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">✓ 已审核数</div>
+                <div style="font-size: 36px; font-weight: 700; margin: 12px 0;">1,126</div>
+                <div style="font-size: 14px; color: var(--success);">↑ 9.8% 审核完成率90.2%</div>
+            </div>
+            <div class="stat-card orange">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">⭐ 奖励事件数</div>
+                <div style="font-size: 36px; font-weight: 700; margin: 12px 0;">985</div>
+                <div style="font-size: 14px; color: var(--text-secondary);">占比80.5%</div>
+            </div>
+            <div class="stat-card red">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">⚠️ 高风险事件</div>
+                <div style="font-size: 36px; font-weight: 700; margin: 12px 0;">42</div>
+                <div style="font-size: 14px; color: var(--success);">↓ 8.7% 占比3.4%</div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div class="chart-container">
+                <div class="chart-title">📊 事件类别分布（饼图）</div>
+                <div class="chart-placeholder">
+                    📊 ECharts 饼图显示区域<br>
+                    医疗40% | 护理25% | 药品15% | 其他20%
+                </div>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">📈 近12个月上报趋势（折线图）</div>
+                <div class="chart-placeholder">
+                    📈 ECharts 折线图显示区域<br>
+                    月度趋势变化分析
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">📊 各科室上报统计（柱状图）</div>
+            <div class="chart-placeholder">
+                📊 ECharts 柱状图显示区域<br>
+                科室对比分析：外科 | 内科 | 急诊科 | 骨科 | ICU
+            </div>
+        </div>
+    </div>
+</body>
+</html>

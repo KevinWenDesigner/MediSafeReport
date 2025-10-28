@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>审核详情 - 医疗安全监测平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .detail-container {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .detail-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 32px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 32px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid white;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
+        }
+
+        .timeline-dot.completed {
+            background: var(--success);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+        }
+
+        .timeline-dot.pending {
+            background: #cbd5e1;
+            box-shadow: 0 0 0 4px rgba(203, 213, 225, 0.2);
+        }
+
+        .timeline-content {
+            background: #f8fafc;
+            padding: 18px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .timeline-stage {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .timeline-time {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .detail-section {
+            margin-bottom: 32px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            padding-left: 14px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .audit-form {
+            background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+            padding: 28px;
+            border-radius: 12px;
+            margin-top: 32px;
+            border: 1px solid var(--border);
+        }
+
+        .audit-form h4 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="logo-icon">🏥</span>
+            <span>医疗安全监测平台</span>
+        </div>
+        <div class="user-info">
+            <div class="notification">🔔<span class="badge">12</span></div>
+            <div class="user-avatar">
+                <div class="avatar">👨‍⚕️</div>
+                <div>
+                    <div style="font-size: 14px; font-weight: 600;">李主任</div>
+                    <div style="font-size: 12px; opacity: 0.85;">医务科 · 审核专员</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <a href="index.html" class="menu-item"><span class="menu-icon">🏠</span><span>工作台</span></a>
+        <a href="report.html" class="menu-item"><span class="menu-icon">📝</span><span>事件上报</span></a>
+        <a href="audit-list.html" class="menu-item active"><span class="menu-icon">✅</span><span>审核管理</span></a>
+        <a href="quality-control.html" class="menu-item"><span class="menu-icon">🔍</span><span>质控监测</span></a>
+        <a href="statistics.html" class="menu-item"><span class="menu-icon">📊</span><span>数据分析</span></a>
+        <a href="rca.html" class="menu-item"><span class="menu-icon">🔬</span><span>根因分析</span></a>
+        <a href="settings.html" class="menu-item"><span class="menu-icon">⚙️</span><span>系统配置</span></a>
+        <a href="permissions.html" class="menu-item"><span class="menu-icon">🔐</span><span>权限中心</span></a>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <span>🏠 工作台 > </span>
+            <span><a href="audit-list.html">审核管理</a> > </span>
+            <span>审核详情</span>
+        </div>
+
+        <div class="detail-container">
+            <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 24px;">📍 审核进度</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot completed"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stage">事件上报</div>
+                        <div class="timeline-time">2025-10-27 14:30 · 张医生（外科）</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stage">职能部门审核</div>
+                        <div class="timeline-time"><span class="status-tag status-pending">待审核</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item" style="padding-bottom: 0;">
+                    <div class="timeline-dot pending"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-stage">质控监测</div>
+                        <div class="timeline-time">等待审核通过</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-container">
+            <h2 class="detail-title">📋 事件详情</h2>
+
+            <div class="detail-section">
+                <h3 class="section-subtitle">一、事件基本信息</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">事件编号</div>
+                        <div class="detail-value">AE20251027001</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">事件上报时间</div>
+                        <div class="detail-value">2025-10-27 14:30</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">事件发生时间</div>
+                        <div class="detail-value">2025-10-27 10:15</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">不良事件分类</div>
+                        <div class="detail-value">医疗管理类 / 手术类</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3 class="section-subtitle">二、患者基本信息</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">患者ID号</div>
+                        <div class="detail-value">PAT20251027001</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">患者姓名</div>
+                        <div class="detail-value">王某某</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">性别/年龄</div>
+                        <div class="detail-value">男 / 65岁</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">所在科室</div>
+                        <div class="detail-value">外科</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3 class="section-subtitle">三、事件详情</h3>
+                <div class="detail-item" style="margin-bottom: 20px;">
+                    <div class="detail-label">不良事件发生过程描述</div>
+                    <div class="detail-value" style="line-height: 1.8; margin-top: 10px;">
+                        患者王某某，男，65岁，因胆囊结石伴慢性胆囊炎于2025年10月25日入院。术前准备充分，于2025年10月27日10:15进入手术室行腹腔镜胆囊切除术。术中在分离胆囊时发现胆囊三角解剖结构不清，疑似胆囊动脉变异。在进一步探查过程中，不慎误伤肝总管，造成肝总管损伤约0.5cm。立即停止手术，请肝胆外科专家会诊，最终转为开腹手术，修补肝总管，手术顺利完成。术后患者生命体征平稳，转入ICU观察。
+                    </div>
+                </div>
+            </div>
+
+            <div class="audit-form">
+                <h4>🔍 审核操作</h4>
+                <div class="form-group">
+                    <label>审核意见</label>
+                    <div style="display: flex; gap: 12px; margin-top: 10px;">
+                        <label class="radio-label">
+                            <input type="radio" name="decision" value="approve" checked>✅ 通过
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="decision" value="reject">❌ 拒绝
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="decision" value="return">↩️ 驳回修改
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>审核备注</label>
+                    <textarea placeholder="请填写审核意见和建议"></textarea>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="submitAudit()">✓ 提交审核</button>
+                    <button class="btn btn-default" onclick="window.print()">🖨️ 打印</button>
+                    <button class="btn btn-default" onclick="window.history.back()">← 返回列表</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitAudit() {
+            alert('✅ 审核已提交！\n\n事件将进入下一个流程节点。');
+            setTimeout(() => window.location.href = 'audit-list.html', 1500);
+        }
+    </script>
+</body>
+</html>

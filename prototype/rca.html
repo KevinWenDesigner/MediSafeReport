@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>根因分析 - 医疗安全监测平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 60px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: #f0f9ff;
+            transform: translateY(-2px);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="logo-icon">🏥</span>
+            <span>医疗安全监测平台</span>
+        </div>
+        <div class="user-info">
+            <div class="notification">🔔<span class="badge">12</span></div>
+            <div class="user-avatar">
+                <div class="avatar">👨‍⚕️</div>
+                <div>
+                    <div style="font-size: 14px; font-weight: 600;">质控专员</div>
+                    <div style="font-size: 12px; opacity: 0.85;">质控部 · 质控管理</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <a href="index.html" class="menu-item"><span class="menu-icon">🏠</span><span>工作台</span></a>
+        <a href="report.html" class="menu-item"><span class="menu-icon">📝</span><span>事件上报</span></a>
+        <a href="audit-list.html" class="menu-item"><span class="menu-icon">✅</span><span>审核管理</span></a>
+        <a href="quality-control.html" class="menu-item"><span class="menu-icon">🔍</span><span>质控监测</span></a>
+        <a href="statistics.html" class="menu-item"><span class="menu-icon">📊</span><span>数据分析</span></a>
+        <a href="rca.html" class="menu-item active"><span class="menu-icon">🔬</span><span>根因分析</span></a>
+        <a href="settings.html" class="menu-item"><span class="menu-icon">⚙️</span><span>系统配置</span></a>
+        <a href="permissions.html" class="menu-item"><span class="menu-icon">🔐</span><span>权限中心</span></a>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <span>🏠 工作台 > </span>
+            <span>🔬 根因分析</span>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📥 RCA模板下载</div>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">下载RCA分析模板，按指引填写后上传</p>
+            <button class="btn btn-primary" onclick="alert('模板下载中...')">📥 下载RCA分析模板</button>
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+            <div class="card-title">📤 上传RCA报告</div>
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📁</div>
+                <div style="font-size: 16px; color: var(--text-primary); margin-bottom: 8px;">点击或拖拽文件到此区域上传</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">支持格式：.docx, .pdf, .xlsx，最大5MB</div>
+                <input type="file" id="fileInput" style="display: none;" accept=".docx,.pdf,.xlsx" onchange="handleFileSelect(this)">
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+            <div class="card-title">📊 RCA报告列表</div>
+            
+            <div class="filter-bar" style="margin: 20px 0;">
+                <div class="filter-row">
+                    <div class="form-group" style="margin: 0;">
+                        <label>时间范围</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label>报告科室</label>
+                        <select><option>全部科室</option></select>
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label>报告人</label>
+                        <input type="text" placeholder="输入报告人">
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary">🔍 查询</button>
+                    <button class="btn btn-default">↻ 重置</button>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>报告名称</th>
+                        <th>报告科室</th>
+                        <th>报告人</th>
+                        <th>提交日期</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>手术室器械遗留事件RCA分析报告</td>
+                        <td>外科</td>
+                        <td>张医生</td>
+                        <td>2025-10-20</td>
+                        <td>
+                            <a href="#" class="action-link">查看</a>
+                            <a href="#" class="action-link">下载</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>患者跌倒事件根因分析</td>
+                        <td>骨科</td>
+                        <td>刘护士</td>
+                        <td>2025-10-15</td>
+                        <td>
+                            <a href="#" class="action-link">查看</a>
+                            <a href="#" class="action-link">下载</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 16px; color: var(--text-secondary); font-size: 14px;">共12份报告</p>
+        </div>
+    </div>
+
+    <script>
+        function handleFileSelect(input) {
+            if (input.files && input.files[0]) {
+                alert(`文件 "${input.files[0].name}" 上传成功！\n\n系统将自动分析RCA报告内容。`);
+            }
+        }
+    </script>
+</body>
+</html>

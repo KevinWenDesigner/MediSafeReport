@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质控监测 - 医疗安全监测平台</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="logo-icon">🏥</span>
+            <span>医疗安全监测平台</span>
+        </div>
+        <div class="user-info">
+            <div class="notification">🔔<span class="badge">12</span></div>
+            <div class="user-avatar">
+                <div class="avatar">👨‍⚕️</div>
+                <div>
+                    <div style="font-size: 14px; font-weight: 600;">质控专员</div>
+                    <div style="font-size: 12px; opacity: 0.85;">质控部 · 质控管理</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <a href="index.html" class="menu-item"><span class="menu-icon">🏠</span><span>工作台</span></a>
+        <a href="report.html" class="menu-item"><span class="menu-icon">📝</span><span>事件上报</span></a>
+        <a href="audit-list.html" class="menu-item"><span class="menu-icon">✅</span><span>审核管理</span></a>
+        <a href="quality-control.html" class="menu-item active"><span class="menu-icon">🔍</span><span>质控监测</span></a>
+        <a href="statistics.html" class="menu-item"><span class="menu-icon">📊</span><span>数据分析</span></a>
+        <a href="rca.html" class="menu-item"><span class="menu-icon">🔬</span><span>根因分析</span></a>
+        <a href="settings.html" class="menu-item"><span class="menu-icon">⚙️</span><span>系统配置</span></a>
+        <a href="permissions.html" class="menu-item"><span class="menu-icon">🔐</span><span>权限中心</span></a>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <span>🏠 工作台 > </span>
+            <span>🔍 质控监测</span>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card orange">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">⏳ 待判定事件</div>
+                <div style="font-size: 36px; font-weight: 700; margin: 12px 0;">24</div>
+                <div style="font-size: 14px; color: var(--text-secondary);">↑ 8.3% · 较上周增长2例</div>
+            </div>
+            <div class="stat-card blue">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">✅ 奖励事件</div>
+                <div style="font-size: 36px; font-weight: 700; margin: 12px 0;">985</div>
+                <div style="font-size: 14px; color: var(--text-secondary);">↑ 5.2% · 占比80.5%</div>
+            </div>
+            <div class="stat-card red">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">❌ 不奖励事件</div>
+                <div style="font-size: 36px; font-weight: 700; margin: 12px 0;">243</div>
+                <div style="font-size: 14px; color: var(--text-secondary);">↓ 2.1% · 占比19.5%</div>
+            </div>
+            <div class="stat-card orange">
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">⚠️ 争议事件</div>
+                <div style="font-size: 36px; font-weight: 700; margin: 12px 0;">12</div>
+                <div style="font-size: 14px; color: var(--text-secondary);">↑ 14.3% · 需专家判定</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-row">
+                <div class="form-group" style="margin: 0;">
+                    <label>时间范围 *</label>
+                    <input type="date">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>事件类别</label>
+                    <select><option>全部类别</option><option>医疗管理类</option></select>
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>质控状态</label>
+                    <select><option>全部</option><option>待判定</option><option>奖励</option></select>
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>患者ID号</label>
+                    <input type="text" placeholder="输入患者ID">
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary">🔍 查询</button>
+                <button class="btn btn-default">↻ 重置</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">质控监测列表</div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-default">批量判定</button>
+                    <button class="btn btn-default">↻ 刷新</button>
+                    <button class="btn btn-default">📥 导出</button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>事件编号</th>
+                        <th>事件类别</th>
+                        <th>患者信息</th>
+                        <th>上报科室</th>
+                        <th>上报时间</th>
+                        <th>质控状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>AE20251027001</td>
+                        <td>医疗管理类</td>
+                        <td>王某某 (PAT20251027001)</td>
+                        <td>外科</td>
+                        <td>2025-10-27 14:30</td>
+                        <td><span class="status-tag status-pending">待判定</span></td>
+                        <td><a href="#" class="action-link">判定</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

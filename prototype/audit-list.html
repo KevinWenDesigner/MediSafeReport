@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>审核管理 - 医疗安全监测平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .pending-count {
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            margin-left: 10px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        .search-box {
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 250px;
+            font-size: 14px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .pagination {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            background: #f8fafc;
+        }
+
+        .page-info {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .page-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .page-btn {
+            padding: 8px 14px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="logo-icon">🏥</span>
+            <span>医疗安全监测平台</span>
+        </div>
+        <div class="user-info">
+            <div class="notification">🔔<span class="badge">12</span></div>
+            <div class="user-avatar">
+                <div class="avatar">👨‍⚕️</div>
+                <div>
+                    <div style="font-size: 14px; font-weight: 600;">李主任</div>
+                    <div style="font-size: 12px; opacity: 0.85;">医务科 · 审核专员</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <a href="index.html" class="menu-item"><span class="menu-icon">🏠</span><span>工作台</span></a>
+        <a href="report.html" class="menu-item"><span class="menu-icon">📝</span><span>事件上报</span></a>
+        <a href="audit-list.html" class="menu-item active"><span class="menu-icon">✅</span><span>审核管理</span></a>
+        <a href="quality-control.html" class="menu-item"><span class="menu-icon">🔍</span><span>质控监测</span></a>
+        <a href="statistics.html" class="menu-item"><span class="menu-icon">📊</span><span>数据分析</span></a>
+        <a href="rca.html" class="menu-item"><span class="menu-icon">🔬</span><span>根因分析</span></a>
+        <a href="settings.html" class="menu-item"><span class="menu-icon">⚙️</span><span>系统配置</span></a>
+        <a href="permissions.html" class="menu-item"><span class="menu-icon">🔐</span><span>权限中心</span></a>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <span>🏠 工作台 > </span>
+            <span>✅ 审核管理</span>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-row">
+                <div class="form-group" style="margin: 0;">
+                    <label>审核状态</label>
+                    <select>
+                        <option value="">全部</option>
+                        <option value="pending" selected>待审核</option>
+                        <option value="approved">已通过</option>
+                        <option value="rejected">已拒绝</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>事件类别</label>
+                    <select>
+                        <option value="">全部类别</option>
+                        <option value="medical">医疗管理类</option>
+                        <option value="nursing">护理管理类</option>
+                        <option value="drug">药品管理类</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>上报科室</label>
+                    <select>
+                        <option value="">全部科室</option>
+                        <option value="emergency">急诊科</option>
+                        <option value="surgery">外科</option>
+                        <option value="internal">内科</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label>患者姓名</label>
+                    <input type="text" placeholder="输入患者姓名">
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary">🔍 查询</button>
+                <button class="btn btn-default">↻ 重置</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div>
+                    <span class="table-title">待审核列表</span>
+                    <span class="pending-count">待审核 12</span>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-default" onclick="location.reload()">↻ 刷新</button>
+                    <button class="btn btn-default">📥 导出</button>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>操作</th>
+                        <th>事件一级类别</th>
+                        <th>事件二级类别</th>
+                        <th>患者类别</th>
+                        <th>患者ID号</th>
+                        <th>患者姓名</th>
+                        <th>上报人</th>
+                        <th>上报科室</th>
+                        <th>上报时间</th>
+                        <th>当前状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="audit-detail.html" class="action-link">审核</a>
+                            <a href="audit-detail.html" class="action-link">查看</a>
+                        </td>
+                        <td>医疗管理类</td>
+                        <td>手术类</td>
+                        <td>住院</td>
+                        <td>PAT20251027001</td>
+                        <td>王某某</td>
+                        <td>张医生</td>
+                        <td>外科</td>
+                        <td>2025-10-27 14:30</td>
+                        <td><span class="status-tag status-pending">待审核</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="audit-detail.html" class="action-link">审核</a>
+                            <a href="audit-detail.html" class="action-link">查看</a>
+                        </td>
+                        <td>护理管理类</td>
+                        <td>跌倒类</td>
+                        <td>住院</td>
+                        <td>PAT20251027002</td>
+                        <td>李某某</td>
+                        <td>刘护士</td>
+                        <td>骨科</td>
+                        <td>2025-10-27 10:15</td>
+                        <td><span class="status-tag status-pending">待审核</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="audit-detail.html" class="action-link">审核</a>
+                            <a href="audit-detail.html" class="action-link">查看</a>
+                        </td>
+                        <td>药品管理类</td>
+                        <td>用药错误</td>
+                        <td>门诊</td>
+                        <td>PAT20251026025</td>
+                        <td>赵某某</td>
+                        <td>陈医生</td>
+                        <td>内科</td>
+                        <td>2025-10-26 16:20</td>
+                        <td><span class="status-tag status-pending">待审核</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="audit-detail.html" class="action-link">审核</a>
+                            <a href="audit-detail.html" class="action-link">查看</a>
+                        </td>
+                        <td>医疗管理类</td>
+                        <td>诊断错误</td>
+                        <td>急诊</td>
+                        <td>PAT20251026018</td>
+                        <td>孙某某</td>
+                        <td>周医生</td>
+                        <td>急诊科</td>
+                        <td>2025-10-26 22:45</td>
+                        <td><span class="status-tag status-pending">待审核</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="audit-detail.html" class="action-link">审核</a>
+                            <a href="audit-detail.html" class="action-link">查看</a>
+                        </td>
+                        <td>护理管理类</td>
+                        <td>压疮类</td>
+                        <td>住院</td>
+                        <td>PAT20251025012</td>
+                        <td>吴某某</td>
+                        <td>郑护士</td>
+                        <td>ICU</td>
+                        <td>2025-10-25 09:30</td>
+                        <td><span class="status-tag status-pending">待审核</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <div class="page-info">共 12 条记录，每页显示 10 条</div>
+                <div class="page-buttons">
+                    <button class="page-btn">«</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">»</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

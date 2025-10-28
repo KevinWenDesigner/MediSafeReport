@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>权限中心 - 医疗安全监测平台</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="logo-icon">🏥</span>
+            <span>医疗安全监测平台</span>
+        </div>
+        <div class="user-info">
+            <div class="notification">🔔<span class="badge">12</span></div>
+            <div class="user-avatar">
+                <div class="avatar">👨‍⚕️</div>
+                <div>
+                    <div style="font-size: 14px; font-weight: 600;">系统管理员</div>
+                    <div style="font-size: 12px; opacity: 0.85;">管理员</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <a href="index.html" class="menu-item"><span class="menu-icon">🏠</span><span>工作台</span></a>
+        <a href="report.html" class="menu-item"><span class="menu-icon">📝</span><span>事件上报</span></a>
+        <a href="audit-list.html" class="menu-item"><span class="menu-icon">✅</span><span>审核管理</span></a>
+        <a href="quality-control.html" class="menu-item"><span class="menu-icon">🔍</span><span>质控监测</span></a>
+        <a href="statistics.html" class="menu-item"><span class="menu-icon">📊</span><span>数据分析</span></a>
+        <a href="rca.html" class="menu-item"><span class="menu-icon">🔬</span><span>根因分析</span></a>
+        <a href="settings.html" class="menu-item"><span class="menu-icon">⚙️</span><span>系统配置</span></a>
+        <a href="permissions.html" class="menu-item active"><span class="menu-icon">🔐</span><span>权限中心</span></a>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <span>🏠 工作台 > </span>
+            <span>🔐 权限中心</span>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">🔐 权限组管理</div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="搜索权限组名称" style="padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; width: 200px;">
+                    <button class="btn btn-default">↻ 刷新</button>
+                    <button class="btn btn-primary" onclick="alert('新增权限组')">+ 新增权限组</button>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>权限组名称</th>
+                        <th>描述</th>
+                        <th>用户数</th>
+                        <th>创建时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>管理员权限</strong></td>
+                        <td>系统最高权限，可访问所有功能模块</td>
+                        <td>5</td>
+                        <td>2023-01-15 09:30</td>
+                        <td><span class="status-tag status-enabled">启用</span></td>
+                        <td>
+                            <a href="#" class="action-link">权限配置</a>
+                            <a href="#" class="action-link">用户</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>上报人员</strong></td>
+                        <td>仅拥有事件上报功能权限</td>
+                        <td>128</td>
+                        <td>2023-01-15 09:30</td>
+                        <td><span class="status-tag status-enabled">启用</span></td>
+                        <td>
+                            <a href="#" class="action-link">权限配置</a>
+                            <a href="#" class="action-link">用户</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>科室审核</strong></td>
+                        <td>科室负责人初审权限</td>
+                        <td>26</td>
+                        <td>2023-01-15 09:30</td>
+                        <td><span class="status-tag status-enabled">启用</span></td>
+                        <td>
+                            <a href="#" class="action-link">权限配置</a>
+                            <a href="#" class="action-link">用户</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>职能部门审核</strong></td>
+                        <td>职能部门负责人终审权限</td>
+                        <td>18</td>
+                        <td>2023-01-15 09:30</td>
+                        <td><span class="status-tag status-enabled">启用</span></td>
+                        <td>
+                            <a href="#" class="action-link">权限配置</a>
+                            <a href="#" class="action-link">用户</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>质控管理</strong></td>
+                        <td>质控部门监测与判定权限</td>
+                        <td>12</td>
+                        <td>2023-01-15 09:30</td>
+                        <td><span class="status-tag status-enabled">启用</span></td>
+                        <td>
+                            <a href="#" class="action-link">权限配置</a>
+                            <a href="#" class="action-link">用户</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>统计分析</strong></td>
+                        <td>仅拥有统计与查询权限报表权限</td>
+                        <td>8</td>
+                        <td>2023-01-15 09:30</td>
+                        <td><span class="status-tag status-disabled">禁用</span></td>
+                        <td>
+                            <a href="#" class="action-link">权限配置</a>
+                            <a href="#" class="action-link">用户</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
